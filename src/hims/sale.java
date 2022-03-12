@@ -34,7 +34,7 @@ public class sale extends javax.swing.JFrame {
         initComponents();
         
         this.lname = name;
-        jLabel16.setText(lname);
+        
         
     }
     
@@ -63,7 +63,6 @@ public class sale extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -89,7 +88,6 @@ public class sale extends javax.swing.JFrame {
         txtbal = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -120,15 +118,6 @@ public class sale extends javax.swing.JFrame {
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Cashier");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
             }
         });
 
@@ -166,7 +155,6 @@ public class sale extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel6)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1)
@@ -193,8 +181,6 @@ public class sale extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(30, 30, 30))
         );
@@ -355,9 +341,6 @@ public class sale extends javax.swing.JFrame {
             }
         });
 
-        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel16.setText("jLabel16");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -393,9 +376,7 @@ public class sale extends javax.swing.JFrame {
                         .addGap(38, 38, 38))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16)
-                        .addGap(19, 19, 19)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -405,10 +386,8 @@ public class sale extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addComponent(jLabel8)
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel16))
-                .addGap(26, 26, 26)
+                .addComponent(jLabel7)
+                .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,7 +560,7 @@ public class sale extends javax.swing.JFrame {
         String date = dtf.format(now);
         
         String subtot = txtsub.getText();
-        String cashier = jLabel16.getText();
+     
         String pay = txtpay.getText();
         String bal = txtbal.getText();
         int lastinsertid = 0;
@@ -589,13 +568,12 @@ public class sale extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/hardware","root","admin");
-            String query = "insert into sales (date,cashier,subtotal,payment,balance)values(?,?,?,?,?)";
+            String query = "insert into sales (date,subtotal,payment,balance)values(?,?,?,?)";
             insert = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             insert.setString(1,date);
-            insert.setString(2,cashier);
-            insert.setString(3, subtot);
-            insert.setString(4, pay);
-            insert.setString(5, bal);
+            insert.setString(2, subtot);
+            insert.setString(3, pay);
+            insert.setString(4, bal);
             insert.executeUpdate();
             ResultSet generatedKeyResult = insert.getGeneratedKeys();
             
@@ -706,18 +684,10 @@ public class sale extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtprocodeKeyPressed
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
-        cashier p = new cashier();
-        this.hide();
-        p.setVisible(true);
-    }//GEN-LAST:event_jLabel4MouseClicked
-
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-        login l = new login();
-        this.hide();
-        l.setVisible(true);
+       Main m = new Main();
+       this.hide();
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -781,11 +751,9 @@ public class sale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
